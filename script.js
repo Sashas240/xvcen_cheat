@@ -4,19 +4,22 @@ const cheatsData = [
         id: 1,
         name: "Delta Client",
         image: "assets/DeltaClient.png",
-        version: "1.16.5"
+        version: "1.16.5",
+        icon: "🔥"
     },
     {
         id: 2,
         name: "Wexside Client",
         image: "assets/WexsideClient.png",
-        version: "1.16.5"
+        version: "1.16.5",
+        icon: "⚡"
     },
     {
         id: 3,
         name: "Venus Free",
         image: "assets/VenusFree.png",
-        version: "1.16.5"
+        version: "1.16.5",
+        icon: "🌟"
     }
 ];
 
@@ -36,8 +39,22 @@ function createCheatCard(cheat) {
     card.className = 'cheat-card';
     card.setAttribute('data-cheat-id', cheat.id);
     
+    // Создаем изображение или иконку
+    const imageElement = document.createElement('img');
+    imageElement.className = 'card-image';
+    imageElement.src = cheat.image;
+    imageElement.alt = cheat.name;
+    imageElement.loading = 'lazy';
+    
+    // Обработчик ошибки загрузки изображения
+    imageElement.onerror = function() {
+        const iconDiv = document.createElement('div');
+        iconDiv.className = 'card-image';
+        iconDiv.textContent = cheat.icon;
+        this.parentNode.replaceChild(iconDiv, this);
+    };
+    
     card.innerHTML = `
-        <img class="card-image" src="${cheat.image}" alt="${cheat.name}" loading="lazy">
         <div class="card-content">
             <h3 class="card-title">${cheat.name}</h3>
             <div class="card-version">
@@ -51,6 +68,9 @@ function createCheatCard(cheat) {
         </div>
     `;
     
+    // Вставляем изображение в начало карточки
+    card.insertBefore(imageElement, card.firstChild);
+    
     // Добавляем обработчик клика для открытия модального окна
     card.addEventListener('click', () => openModal(cheat));
     
@@ -60,16 +80,29 @@ function createCheatCard(cheat) {
 // Рендер всех карточек
 function renderCheats() {
     catalogGrid.innerHTML = '';
-    cheatsData.forEach(cheat => {
+    cheatsData.forEach((cheat, index) => {
         const card = createCheatCard(cheat);
         catalogGrid.appendChild(card);
+        
+        // Анимация появления карточек
+        setTimeout(() => {
+            card.classList.add('animate');
+        }, index * 100);
     });
 }
 
 // Открытие модального окна
 function openModal(cheat) {
-    modalImage.src = cheat.image;
-    modalImage.alt = cheat.name;
+    // Пробуем загрузить изображение
+    const img = new Image();
+    img.onload = function() {
+        modalImage.innerHTML = `<img src="${cheat.image}" alt="${cheat.name}" style="width: 100%; height: 100%; object-fit: cover;">`;
+    };
+    img.onerror = function() {
+        modalImage.textContent = cheat.icon;
+    };
+    img.src = cheat.image;
+    
     modalTitle.textContent = cheat.name;
     modalVersion.querySelector('span').textContent = `Версия: ${cheat.version}`;
     
@@ -137,7 +170,8 @@ function addCheat(cheatData) {
         id: newId,
         name: cheatData.name,
         image: cheatData.image,
-        version: cheatData.version || "1.16.5"
+        version: cheatData.version || "1.16.5",
+        icon: cheatData.icon || "🎮"
     };
     
     cheatsData.push(newCheat);
@@ -164,21 +198,6 @@ window.CheatsCatalog = {
     cheatsData
 };
 
-// Плавная анимация загрузки
-document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.cheat-card');
-    cards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        
-        setTimeout(() => {
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, index * 100);
-    });
-});
-
 // Добавляем эффект параллакса для фона
 document.addEventListener('mousemove', (e) => {
     const mouseX = e.clientX / window.innerWidth;
@@ -191,3 +210,120 @@ document.addEventListener('mousemove', (e) => {
         linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)
     `;
 });
+
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    // Добавляем класс для анимации загрузки
+    document.body.classList.add('loaded');
+    
+    // Инициализируем каталог
+    renderCheats();
+});
+
+// Добавляем дополнительные функции для работы с читами
+window.CheatsCatalog.updateCheat = function(cheatId, newData) {
+    const index = cheatsData.findIndex(c => c.id === cheatId);
+    if (index > -1) {
+        cheatsData[index] = { ...cheatsData[index], ...newData };
+        renderCheats();
+        return cheatsData[index];
+    }
+    return null;
+};
+
+window.CheatsCatalog.getCheat = function(cheatId) {
+    return cheatsData.find(c => c.id === cheatId);
+};
+
+window.CheatsCatalog.getAllCheats = function() {
+    return [...cheatsData];
+};
+
+// Добавляем функцию для изменения темы (если потребуется)
+window.CheatsCatalog.changeTheme = function(theme) {
+    document.body.className = theme;
+};
+
+// Функция для поиска читов
+window.CheatsCatalog.searchCheats = function(query) {
+    const filteredCheats = cheatsData.filter(cheat => 
+        cheat.name.toLowerCase().includes(query.toLowerCase()) ||
+        cheat.version.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    catalogGrid.innerHTML = '';
+    filteredCheats.forEach((cheat, index) => {
+        const card = createCheatCard(cheat);
+        catalogGrid.appendChild(card);
+        
+        setTimeout(() => {
+            card.classList.add('animate');
+        }, index * 100);
+    });
+    
+    return filteredCheats;
+};
+
+// Функция для сортировки читов
+window.CheatsCatalog.sortCheats = function(sortBy) {
+    let sortedCheats = [...cheatsData];
+    
+    switch(sortBy) {
+        case 'name':
+            sortedCheats.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+        case 'version':
+            sortedCheats.sort((a, b) => a.version.localeCompare(b.version));
+            break;
+        case 'id':
+            sortedCheats.sort((a, b) => a.id - b.id);
+            break;
+        default:
+            break;
+    }
+    
+    catalogGrid.innerHTML = '';
+    sortedCheats.forEach((cheat, index) => {
+        const card = createCheatCard(cheat);
+        catalogGrid.appendChild(card);
+        
+        setTimeout(() => {
+            card.classList.add('animate');
+        }, index * 100);
+    });
+    
+    return sortedCheats;
+};
+
+// Добавляем обработчики для клавиатурной навигации
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab' && modalOverlay.classList.contains('active')) {
+        e.preventDefault();
+        
+        const focusableElements = modalOverlay.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        
+        if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+                lastElement.focus();
+            }
+        } else {
+            if (document.activeElement === lastElement) {
+                firstElement.focus();
+            }
+        }
+    }
+});
+
+// Автофокус на кнопке закрытия при открытии модального окна
+const originalOpenModal = openModal;
+openModal = function(cheat) {
+    originalOpenModal(cheat);
+    setTimeout(() => {
+        modalClose.focus();
+    }, 100);
+};
