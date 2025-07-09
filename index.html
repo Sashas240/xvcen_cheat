@@ -6,6 +6,19 @@
   <title>CheatHub</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script>
+    function showSuccessMessage(button) {
+      const success = document.createElement('div');
+      success.textContent = 'Скачивание успешно';
+      success.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg transition-opacity duration-500 opacity-0';
+      document.body.appendChild(success);
+      setTimeout(() => success.classList.add('opacity-100'), 50);
+      setTimeout(() => {
+        success.classList.remove('opacity-100');
+        setTimeout(() => document.body.removeChild(success), 500);
+      }, 2000);
+    }
+  </script>
 </head>
 <body class="bg-gray-900 text-white">
   <header class="flex justify-between items-center p-4 bg-black border-b border-gray-700">
@@ -16,22 +29,32 @@
   </header>
 
   <main class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- Карточка 1 -->
+    <!-- Карточка -->
     <div class="card bg-gray-800 rounded-lg p-4">
       <img src="assets/DeltaClient.png" alt="Delta Client" class="rounded mb-4">
       <h2 class="text-xl font-bold">Delta Client</h2>
+      <p class="text-sm text-gray-400 mt-1 flex items-center gap-2">🧩 Версия: <span class="font-semibold">1.16.5</span></p>
+      <button onclick="showSuccessMessage(this)" class="mt-4 inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 transition text-white px-4 py-2 rounded-full shadow">
+        ⬇️ Скачать
+      </button>
     </div>
 
-    <!-- Карточка 2 -->
     <div class="card bg-gray-800 rounded-lg p-4">
       <img src="assets/WexsideClient.png" alt="Wexside Client" class="rounded mb-4">
       <h2 class="text-xl font-bold">Wexside Client</h2>
+      <p class="text-sm text-gray-400 mt-1 flex items-center gap-2">🧩 Версия: <span class="font-semibold">1.16.5</span></p>
+      <button onclick="showSuccessMessage(this)" class="mt-4 inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 transition text-white px-4 py-2 rounded-full shadow">
+        ⬇️ Скачать
+      </button>
     </div>
 
-    <!-- Карточка 3 -->
     <div class="card bg-gray-800 rounded-lg p-4">
       <img src="assets/VenusFree.png" alt="Venus Free" class="rounded mb-4">
       <h2 class="text-xl font-bold">Venus Free</h2>
+      <p class="text-sm text-gray-400 mt-1 flex items-center gap-2">🧩 Версия: <span class="font-semibold">1.16.5</span></p>
+      <button onclick="showSuccessMessage(this)" class="mt-4 inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 transition text-white px-4 py-2 rounded-full shadow">
+        ⬇️ Скачать
+      </button>
     </div>
   </main>
 </body>
