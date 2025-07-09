@@ -8,46 +8,41 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-900 text-white">
+
   <header class="flex justify-between items-center p-4 bg-black border-b border-gray-700">
     <h1 class="text-red-500 text-2xl font-bold">CheatHub</h1>
-    <nav class="space-x-6">
-      <a href="#" class="hover:text-gray-400">Главная</a>
-    </nav>
+    <nav><a href="#" class="hover:text-gray-400">Главная</a></nav>
   </header>
 
   <main class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- Карточка -->
+    <!-- Delta -->
     <div onclick="openModal('Delta Client', 'assets/DeltaClient.png')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
       <img src="assets/DeltaClient.png" alt="Delta Client" class="rounded mb-4">
       <h2 class="text-xl font-bold flex items-center gap-2">Delta Client <span class="text-sm bg-gray-700 px-2 py-1 rounded">1.16.5</span></h2>
     </div>
+
+    <!-- Wexside -->
+    <div onclick="openModal('Wexside Client', 'assets/WexsideClient.png')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
+      <img src="assets/WexsideClient.png" alt="Wexside Client" class="rounded mb-4">
+      <h2 class="text-xl font-bold flex items-center gap-2">Wexside Client <span class="text-sm bg-gray-700 px-2 py-1 rounded">1.16.5</span></h2>
+    </div>
+
+    <!-- Venus -->
+    <div onclick="openModal('Venus Free', 'assets/VenusFree.png')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
+      <img src="assets/VenusFree.png" alt="Venus Free" class="rounded mb-4">
+      <h2 class="text-xl font-bold flex items-center gap-2">Venus Free <span class="text-sm bg-gray-700 px-2 py-1 rounded">1.16.5</span></h2>
+    </div>
   </main>
 
-  <!-- Модальное окно -->
+  <!-- Модалка -->
   <div id="modal" class="modal-container hidden">
     <div class="modal-content">
       <button onclick="closeModal()" class="close-button">×</button>
-      <h3 id="modalTitle">Название чита</h3>
-      <div class="modal-grid">
-        <div class="modal-left">
-          <img id="modalImage" src="" alt="Main Image" class="main-image">
-          <div class="thumbnail-row">
-            <img src="assets/DeltaClient.png" class="thumb active">
-            <img src="assets/WexsideClient.png" class="thumb">
-          </div>
-          <div class="info-box">
-            <p>📦 <strong>Версия:</strong> 1.16.5</p>
-            <p>🎮 <strong>Поддерживаемые версии:</strong> 1.16.5</p>
-          </div>
-        </div>
-        <div class="modal-right">
-          <div class="desc-box">
-            <p class="desc-title">Описание</p>
-            <p class="desc-text">Кряк от 08.05.2025</p>
-          </div>
-          <button onclick="showSuccess()" class="download-button">⬇️ Скачать</button>
-        </div>
-      </div>
+      <h3 id="modalTitle" class="text-2xl font-semibold mb-4">Название чита</h3>
+      <img id="modalImage" src="" alt="Main Image" class="main-image mb-4">
+      <p class="mb-2">📦 <strong>Версия:</strong> 1.16.5</p>
+      <p class="mb-4">🎮 <strong>Поддерживаемые версии:</strong> 1.16.5</p>
+      <button onclick="showSuccess()" class="download-button">⬇️ Скачать</button>
     </div>
   </div>
 
