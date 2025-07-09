@@ -1,8 +1,97 @@
-.card {
-  transition: transform 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
+.modal-container {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
 }
-.card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
-  border: 2px solid rgba(255, 0, 0, 0.8);
+.modal-container.show {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal-content {
+  background-color: #1b1b1d;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  max-width: 768px;
+  width: 90%;
+  position: relative;
+}
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  color: #ccc;
+  cursor: pointer;
+}
+.modal-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+}
+.main-image {
+  width: 100%;
+  border-radius: 0.5rem;
+}
+.thumbnail-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.thumb {
+  width: 80px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  opacity: 0.5;
+  cursor: pointer;
+}
+.thumb.active {
+  border: 2px solid red;
+  opacity: 1;
+}
+.info-box, .desc-box {
+  background-color: #111113;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  margin-top: 1rem;
+}
+.desc-title {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+.download-button {
+  background-color: #e3342f;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  margin-top: 1rem;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+.download-button:hover {
+  background-color: #cc1f1a;
+}
+.success-popup {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #16a34a;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 1rem;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 50;
+}
+.success-popup.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
