@@ -1,54 +1,74 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CheatHub</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Cheats Catalog</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-900 text-white">
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">
+                <span class="icon">⚡</span>
+                Minecraft Cheats
+                <span class="subtitle">Gaming Arsenal</span>
+            </h1>
+        </header>
 
-  <header class="flex justify-between items-center p-4 bg-black border-b border-gray-700">
-    <h1 class="text-red-500 text-2xl font-bold">CheatHub</h1>
-    <nav><a href="#" class="hover:text-gray-400">Главная</a></nav>
-  </header>
-
-  <main class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- Delta -->
-    <div onclick="openModal('Delta Client', 'assets/DeltaClient.png')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
-      <img src="assets/DeltaClient.png" alt="Delta Client" class="rounded mb-4">
-      <h2 class="text-xl font-bold flex items-center gap-2">Delta Client <span class="text-sm bg-gray-700 px-2 py-1 rounded">1.16.5</span></h2>
+        <div class="catalog-grid" id="catalogGrid">
+            <!-- Карточки будут добавлены через JavaScript -->
+        </div>
     </div>
 
-    <!-- Wexside -->
-    <div onclick="openModal('Wexside Client', 'assets/WexsideClient.png')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
-      <img src="assets/WexsideClient.png" alt="Wexside Client" class="rounded mb-4">
-      <h2 class="text-xl font-bold flex items-center gap-2">Wexside Client <span class="text-sm bg-gray-700 px-2 py-1 rounded">1.16.5</span></h2>
+    <!-- Модальное окно -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="modal-content">
+                <div class="modal-image-container">
+                    <img class="modal-image" id="modalImage" src="" alt="">
+                </div>
+                
+                <div class="modal-info">
+                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <div class="modal-version" id="modalVersion">
+                        <svg class="version-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                        <span>Версия: 1.16.5</span>
+                    </div>
+                    <div class="modal-support">
+                        <span class="support-badge">✓ Поддерживает 1.16.5</span>
+                    </div>
+                    
+                    <button class="download-btn" id="downloadBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7,10 12,15 17,10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Скачать
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Venus -->
-    <div onclick="openModal('Venus Free', 'assets/VenusFree.png')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
-      <img src="assets/VenusFree.png" alt="Venus Free" class="rounded mb-4">
-      <h2 class="text-xl font-bold flex items-center gap-2">Venus Free <span class="text-sm bg-gray-700 px-2 py-1 rounded">1.16.5</span></h2>
+    <!-- Уведомление -->
+    <div class="notification" id="notification">
+        <span class="notification-icon">🟢</span>
+        <span class="notification-text">Загрузка началась</span>
     </div>
-  </main>
 
-  <!-- Модалка -->
-  <div id="modal" class="modal-container hidden">
-    <div class="modal-content">
-      <button onclick="closeModal()" class="close-button">×</button>
-      <h3 id="modalTitle" class="text-2xl font-semibold mb-4">Название чита</h3>
-      <img id="modalImage" src="" alt="Main Image" class="main-image mb-4">
-      <p class="mb-2">📦 <strong>Версия:</strong> 1.16.5</p>
-      <p class="mb-4">🎮 <strong>Поддерживаемые версии:</strong> 1.16.5</p>
-      <button onclick="showSuccess()" class="download-button">⬇️ Скачать</button>
-    </div>
-  </div>
-
-  <!-- Уведомление -->
-  <div id="successPopup" class="success-popup">Скачивание успешно</div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
