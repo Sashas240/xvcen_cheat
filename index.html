@@ -7,6 +7,18 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
+    .modal-bg {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+    .modal {
+      transform: translateY(30px);
+      opacity: 0;
+      transition: all 0.4s ease;
+    }
+    .modal.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
     .success-popup {
       transition: all 0.5s ease;
       transform: translateY(100%);
@@ -16,23 +28,22 @@
       transform: translateY(0);
       opacity: 1;
     }
-    .detail-box {
-      transition: all 0.5s ease;
-      transform: scale(0.95);
-      opacity: 0;
-      display: none;
-    }
-    .detail-box.show {
-      display: block;
-      transform: scale(1);
-      opacity: 1;
-    }
   </style>
   <script>
-    function toggleDetail(id) {
-      document.querySelectorAll('.detail-box').forEach(e => e.classList.remove('show'));
-      document.getElementById(id).classList.add('show');
+    function openModal(title) {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modalTitle');
+      modalTitle.textContent = title;
+      modal.classList.remove('hidden');
+      setTimeout(() => modal.classList.add('show'), 50);
     }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('show');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
     function showSuccess() {
       const popup = document.getElementById('successPopup');
       popup.classList.add('show');
@@ -52,41 +63,35 @@
 
   <main class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     <!-- Карточка 1 -->
-    <div onclick="toggleDetail('detail1')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
+    <div onclick="openModal('Delta Client')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
       <img src="assets/DeltaClient.png" alt="Delta Client" class="rounded mb-4">
       <h2 class="text-xl font-bold flex items-center gap-2">Delta Client <span class="text-sm bg-gray-700 px-2 py-1 rounded">1.16.5</span></h2>
     </div>
-    <div id="detail1" class="detail-box bg-gray-700 rounded-xl p-4 mt-2">
-      <p class="mb-2">🧩 Версия чита: <strong>1.16.5</strong></p>
-      <button onclick="showSuccess()" class="bg-green-600 hover:bg-green-700 transition px-4 py-2 rounded-full text-white shadow inline-flex items-center gap-2">
-        ⬇️ Скачать
-      </button>
-    </div>
-
     <!-- Карточка 2 -->
-    <div onclick="toggleDetail('detail2')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
+    <div onclick="openModal('Wexside Client')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
       <img src="assets/WexsideClient.png" alt="Wexside Client" class="rounded mb-4">
       <h2 class="text-xl font-bold flex items-center gap-2">Wexside Client <span class="text-sm bg-gray-700 px-2 py-1 rounded">1.16.5</span></h2>
     </div>
-    <div id="detail2" class="detail-box bg-gray-700 rounded-xl p-4 mt-2">
-      <p class="mb-2">🧩 Версия чита: <strong>1.16.5</strong></p>
-      <button onclick="showSuccess()" class="bg-green-600 hover:bg-green-700 transition px-4 py-2 rounded-full text-white shadow inline-flex items-center gap-2">
-        ⬇️ Скачать
-      </button>
-    </div>
-
     <!-- Карточка 3 -->
-    <div onclick="toggleDetail('detail3')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
+    <div onclick="openModal('Venus Free')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
       <img src="assets/VenusFree.png" alt="Venus Free" class="rounded mb-4">
       <h2 class="text-xl font-bold flex items-center gap-2">Venus Free <span class="text-sm bg-gray-700 px-2 py-1 rounded">1.16.5</span></h2>
     </div>
-    <div id="detail3" class="detail-box bg-gray-700 rounded-xl p-4 mt-2">
-      <p class="mb-2">🧩 Версия чита: <strong>1.16.5</strong></p>
-      <button onclick="showSuccess()" class="bg-green-600 hover:bg-green-700 transition px-4 py-2 rounded-full text-white shadow inline-flex items-center gap-2">
+  </main>
+
+  <!-- Модальное окно -->
+  <div id="modal" class="hidden fixed inset-0 flex items-center justify-center modal-bg z-50">
+    <div class="modal bg-gray-800 rounded-lg p-6 w-full max-w-md shadow-lg">
+      <div class="flex justify-between items-center mb-4">
+        <h3 id="modalTitle" class="text-xl font-semibold">Название чита</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-white text-xl">×</button>
+      </div>
+      <p class="mb-4">🧩 Версия: <strong>1.16.5</strong></p>
+      <button onclick="showSuccess()" class="bg-green-600 hover:bg-green-700 transition px-4 py-2 rounded-full text-white shadow inline-flex items-center gap-2 w-full justify-center">
         ⬇️ Скачать
       </button>
     </div>
-  </main>
+  </div>
 
   <div id="successPopup" class="success-popup fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg z-50">
     Скачивание успешно
