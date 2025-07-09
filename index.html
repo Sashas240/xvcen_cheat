@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CheatHub</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
@@ -30,20 +30,18 @@
     }
   </style>
   <script>
-    function openModal(title) {
+    function openModal(title, image) {
       const modal = document.getElementById('modal');
-      const modalTitle = document.getElementById('modalTitle');
-      modalTitle.textContent = title;
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalImage').src = image;
       modal.classList.remove('hidden');
       setTimeout(() => modal.classList.add('show'), 50);
     }
-
     function closeModal() {
       const modal = document.getElementById('modal');
       modal.classList.remove('show');
       setTimeout(() => modal.classList.add('hidden'), 300);
     }
-
     function showSuccess() {
       const popup = document.getElementById('successPopup');
       popup.classList.add('show');
@@ -62,37 +60,46 @@
   </header>
 
   <main class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- Карточка 1 -->
-    <div onclick="openModal('Delta Client')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
+    <!-- Карточка -->
+    <div onclick="openModal('Delta Client', 'assets/DeltaClient.png')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
       <img src="assets/DeltaClient.png" alt="Delta Client" class="rounded mb-4">
       <h2 class="text-xl font-bold flex items-center gap-2">Delta Client <span class="text-sm bg-gray-700 px-2 py-1 rounded">1.16.5</span></h2>
-    </div>
-    <!-- Карточка 2 -->
-    <div onclick="openModal('Wexside Client')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
-      <img src="assets/WexsideClient.png" alt="Wexside Client" class="rounded mb-4">
-      <h2 class="text-xl font-bold flex items-center gap-2">Wexside Client <span class="text-sm bg-gray-700 px-2 py-1 rounded">1.16.5</span></h2>
-    </div>
-    <!-- Карточка 3 -->
-    <div onclick="openModal('Venus Free')" class="card bg-gray-800 rounded-lg p-4 cursor-pointer">
-      <img src="assets/VenusFree.png" alt="Venus Free" class="rounded mb-4">
-      <h2 class="text-xl font-bold flex items-center gap-2">Venus Free <span class="text-sm bg-gray-700 px-2 py-1 rounded">1.16.5</span></h2>
     </div>
   </main>
 
   <!-- Модальное окно -->
   <div id="modal" class="hidden fixed inset-0 flex items-center justify-center modal-bg z-50">
-    <div class="modal bg-gray-800 rounded-lg p-6 w-full max-w-md shadow-lg">
-      <div class="flex justify-between items-center mb-4">
-        <h3 id="modalTitle" class="text-xl font-semibold">Название чита</h3>
-        <button onclick="closeModal()" class="text-gray-400 hover:text-white text-xl">×</button>
+    <div class="modal bg-[#1b1b1d] rounded-xl p-6 w-full max-w-3xl shadow-lg relative">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">×</button>
+      <h3 id="modalTitle" class="text-2xl font-semibold mb-4">Название чита</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="md:col-span-2">
+          <img id="modalImage" src="" alt="Main Image" class="rounded w-full mb-4">
+          <div class="flex gap-2">
+            <img src="assets/DeltaClient.png" class="w-20 h-14 rounded border-2 border-red-600" alt="thumb">
+            <img src="assets/WexsideClient.png" class="w-20 h-14 rounded opacity-50" alt="thumb">
+          </div>
+          <div class="bg-[#111113] mt-6 p-4 rounded-xl">
+            <p class="mb-2">📦 <strong>Версия:</strong> 1.16.5</p>
+            <p class="mb-2">🎮 <strong>Поддерживаемые версии:</strong> 1.16.5</p>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4">
+          <div class="bg-[#111113] p-4 rounded-xl">
+            <p class="font-semibold text-lg mb-2">Описание</p>
+            <p class="text-sm text-gray-400">Кряк от 08.05.2025</p>
+          </div>
+          <div>
+            <button onclick="showSuccess()" class="bg-red-600 hover:bg-red-700 transition px-4 py-2 rounded-full text-white w-full shadow inline-flex items-center gap-2 justify-center">
+              ⬇️ Скачать
+            </button>
+          </div>
+        </div>
       </div>
-      <p class="mb-4">🧩 Версия: <strong>1.16.5</strong></p>
-      <button onclick="showSuccess()" class="bg-green-600 hover:bg-green-700 transition px-4 py-2 rounded-full text-white shadow inline-flex items-center gap-2 w-full justify-center">
-        ⬇️ Скачать
-      </button>
     </div>
   </div>
 
+  <!-- Уведомление -->
   <div id="successPopup" class="success-popup fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg z-50">
     Скачивание успешно
   </div>
