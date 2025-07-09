@@ -79,6 +79,13 @@ body {
     transition: all 0.3s ease;
     border: 1px solid #333;
     position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.cheat-card.animate {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .cheat-card::before {
@@ -109,6 +116,12 @@ body {
     height: 200px;
     object-fit: cover;
     transition: transform 0.3s ease;
+    background: linear-gradient(45deg, #2a2a2a, #3a3a3a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #666;
 }
 
 .cheat-card:hover .card-image {
@@ -219,6 +232,12 @@ body {
     height: 300px;
     object-fit: cover;
     border-radius: 0.5rem;
+    background: linear-gradient(45deg, #2a2a2a, #3a3a3a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: #666;
 }
 
 .modal-title {
