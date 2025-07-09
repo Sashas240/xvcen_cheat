@@ -30,41 +30,9 @@
   color: #ccc;
   cursor: pointer;
 }
-.modal-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 1rem;
-}
 .main-image {
   width: 100%;
   border-radius: 0.5rem;
-}
-.thumbnail-row {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-.thumb {
-  width: 80px;
-  height: 56px;
-  object-fit: cover;
-  border-radius: 0.25rem;
-  opacity: 0.5;
-  cursor: pointer;
-}
-.thumb.active {
-  border: 2px solid red;
-  opacity: 1;
-}
-.info-box, .desc-box {
-  background-color: #111113;
-  padding: 1rem;
-  border-radius: 0.75rem;
-  margin-top: 1rem;
-}
-.desc-title {
-  font-weight: bold;
-  margin-bottom: 0.25rem;
 }
 .download-button {
   background-color: #e3342f;
