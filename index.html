@@ -4,411 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minecraft Cheats Catalog</title>
-    <style>
-        /* Основные стили */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-            color: #ffffff;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Заголовок */
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .title {
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(45deg, #ff0040, #ff4080, #ff0040);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientShift 3s ease-in-out infinite;
-            margin-bottom: 0.5rem;
-        }
-
-        .title .icon {
-            display: inline-block;
-            margin-right: 0.5rem;
-            animation: pulse 2s infinite;
-        }
-
-        .subtitle {
-            display: block;
-            font-size: 1rem;
-            font-weight: 400;
-            color: #888;
-            margin-top: 0.5rem;
-            letter-spacing: 0.1em;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* Сетка каталога */
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        /* Карточки */
-        .cheat-card {
-            background: linear-gradient(145deg, #1a1a1a 0%, #2a2a2a 100%);
-            border-radius: 1rem;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid #333;
-            position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .cheat-card.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .cheat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(255, 0, 64, 0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1;
-        }
-
-        .cheat-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(255, 0, 64, 0.3);
-            border-color: #ff0040;
-        }
-
-        .cheat-card:hover::before {
-            opacity: 1;
-        }
-
-        .card-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-            background: linear-gradient(45deg, #2a2a2a, #3a3a3a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: #666;
-        }
-
-        .cheat-card:hover .card-image {
-            transform: scale(1.05);
-        }
-
-        .card-content {
-            padding: 1.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #ffffff;
-        }
-
-        .card-version {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        .version-icon {
-            color: #ff0040;
-        }
-
-        /* Модальное окно */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal {
-            background: linear-gradient(145deg, #1a1a1a 0%, #2a2a2a 100%);
-            border-radius: 1rem;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            border: 1px solid #333;
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-overlay.active .modal {
-            transform: scale(1);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(255, 0, 64, 0.1);
-            border: 1px solid #ff0040;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 10;
-        }
-
-        .modal-close:hover {
-            background: rgba(255, 0, 64, 0.2);
-            transform: scale(1.1);
-        }
-
-        .modal-close svg {
-            color: #ff0040;
-        }
-
-        .modal-content {
-            padding: 2rem;
-        }
-
-        .modal-image-container {
-            margin-bottom: 2rem;
-        }
-
-        .modal-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 0.5rem;
-            background: linear-gradient(45deg, #2a2a2a, #3a3a3a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: #666;
-        }
-
-        .modal-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #ffffff;
-        }
-
-        .modal-version {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #888;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .modal-support {
-            margin-bottom: 2rem;
-        }
-
-        .support-badge {
-            display: inline-block;
-            background: rgba(0, 255, 0, 0.1);
-            color: #00ff00;
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
-            font-size: 0.9rem;
-            border: 1px solid #00ff00;
-        }
-
-        .download-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: linear-gradient(45deg, #ff0040, #ff4080);
-            border: none;
-            border-radius: 0.5rem;
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #ffffff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 0, 64, 0.4);
-        }
-
-        /* Уведомление */
-        .notification {
-            position: fixed;
-            bottom: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(45deg, #00ff00, #40ff40);
-            color: #000000;
-            padding: 1rem 2rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 10px 20px rgba(0, 255, 0, 0.3);
-            transition: bottom 0.3s ease;
-            z-index: 1001;
-        }
-
-        .notification.show {
-            bottom: 2rem;
-        }
-
-        .notification-icon {
-            font-size: 1.2rem;
-        }
-
-        /* Адаптивность */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            
-            .title {
-                font-size: 2rem;
-            }
-            
-            .catalog-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            
-            .modal {
-                width: 95%;
-                margin: 1rem;
-            }
-            
-            .modal-content {
-                padding: 1.5rem;
-            }
-            
-            .modal-image {
-                height: 200px;
-            }
-            
-            .modal-title {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header class="header">
             <h1 class="title">
-                <span class="icon">⚡</span>
+                <span class="title-icon">⚡</span>
                 Minecraft Cheats
-                <span class="subtitle">Gaming Arsenal</span>
             </h1>
+            <p class="subtitle">Лучшие клиенты для Minecraft 1.16.5</p>
         </header>
 
-        <div class="catalog-grid" id="catalogGrid">
-            <!-- Карточки будут добавлены через JavaScript -->
-        </div>
+        <main class="catalog">
+            <div class="cheat-card" data-cheat="delta">
+                <div class="card-image">
+                    <img src="assets/DeltaClient.png" alt="Delta Client" loading="lazy">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Delta Client</h3>
+                    <div class="card-version">
+                        <svg class="version-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                        <span>1.16.5</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cheat-card" data-cheat="wexside">
+                <div class="card-image">
+                    <img src="assets/WexsideClient.png" alt="Wexside Client" loading="lazy">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Wexside Client</h3>
+                    <div class="card-version">
+                        <svg class="version-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                        <span>1.16.5</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cheat-card" data-cheat="venus">
+                <div class="card-image">
+                    <img src="assets/VenusFree.png" alt="Venus Free" loading="lazy">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Venus Free</h3>
+                    <div class="card-version">
+                        <svg class="version-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                        <span>1.16.5</span>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <!-- Модальное окно -->
-    <div class="modal-overlay" id="modalOverlay">
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal-overlay">
         <div class="modal">
-            <button class="modal-close" id="modalClose">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <button class="modal-close" id="modal-close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </button>
-            
             <div class="modal-content">
-                <div class="modal-image-container">
-                    <div class="modal-image" id="modalImage">🎮</div>
+                <div class="modal-image">
+                    <img id="modal-img" src="" alt="">
                 </div>
-                
                 <div class="modal-info">
-                    <h2 class="modal-title" id="modalTitle"></h2>
-                    <div class="modal-version" id="modalVersion">
-                        <svg class="version-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                            <path d="M2 17l10 5 10-5"></path>
-                            <path d="M2 12l10 5 10-5"></path>
+                    <h2 id="modal-title"></h2>
+                    <div class="modal-version">
+                        <svg class="version-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
                         </svg>
                         <span>Версия: 1.16.5</span>
                     </div>
                     <div class="modal-support">
-                        <span class="support-badge">✓ Поддерживает 1.16.5</span>
+                        <svg class="support-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20,6 9,17 4,12"></polyline>
+                        </svg>
+                        <span>Поддержка Minecraft 1.16.5</span>
                     </div>
-                    
-                    <button class="download-btn" id="downloadBtn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7,10 12,15 17,10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                    <button class="download-btn" id="download-btn">
+                        <svg class="download-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7,10 12,15 17,10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
                         </svg>
                         Скачать
                     </button>
@@ -417,199 +112,14 @@
         </div>
     </div>
 
-    <!-- Уведомление -->
+    <!-- Notification -->
     <div class="notification" id="notification">
-        <span class="notification-icon">🟢</span>
-        <span class="notification-text">Загрузка началась</span>
+        <div class="notification-content">
+            <span class="notification-icon">🟢</span>
+            <span class="notification-text">Загрузка началась</span>
+        </div>
     </div>
 
-    <script>
-        // Данные читов
-        const cheatsData = [
-            {
-                id: 1,
-                name: "Delta Client",
-                image: "assets/DeltaClient.png",
-                version: "1.16.5",
-                icon: "🔥"
-            },
-            {
-                id: 2,
-                name: "Wexside Client",
-                image: "assets/WexsideClient.png",
-                version: "1.16.5",
-                icon: "⚡"
-            },
-            {
-                id: 3,
-                name: "Venus Free",
-                image: "assets/VenusFree.png",
-                version: "1.16.5",
-                icon: "🌟"
-            }
-        ];
-
-        // DOM элементы
-        const catalogGrid = document.getElementById('catalogGrid');
-        const modalOverlay = document.getElementById('modalOverlay');
-        const modalClose = document.getElementById('modalClose');
-        const modalImage = document.getElementById('modalImage');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalVersion = document.getElementById('modalVersion');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const notification = document.getElementById('notification');
-
-        // Создание карточки чита
-        function createCheatCard(cheat) {
-            const card = document.createElement('div');
-            card.className = 'cheat-card';
-            card.setAttribute('data-cheat-id', cheat.id);
-            
-            card.innerHTML = `
-                <div class="card-image">${cheat.icon}</div>
-                <div class="card-content">
-                    <h3 class="card-title">${cheat.name}</h3>
-                    <div class="card-version">
-                        <svg class="version-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                            <path d="M2 17l10 5 10-5"></path>
-                            <path d="M2 12l10 5 10-5"></path>
-                        </svg>
-                        <span>Версия: ${cheat.version}</span>
-                    </div>
-                </div>
-            `;
-            
-            // Добавляем обработчик клика для открытия модального окна
-            card.addEventListener('click', () => openModal(cheat));
-            
-            return card;
-        }
-
-        // Рендер всех карточек
-        function renderCheats() {
-            catalogGrid.innerHTML = '';
-            cheatsData.forEach((cheat, index) => {
-                const card = createCheatCard(cheat);
-                catalogGrid.appendChild(card);
-                
-                // Анимация появления карточек
-                setTimeout(() => {
-                    card.classList.add('animate');
-                }, index * 100);
-            });
-        }
-
-        // Открытие модального окна
-        function openModal(cheat) {
-            modalImage.textContent = cheat.icon;
-            modalTitle.textContent = cheat.name;
-            modalVersion.querySelector('span').textContent = `Версия: ${cheat.version}`;
-            
-            // Сохраняем данные чита для кнопки скачивания
-            downloadBtn.setAttribute('data-cheat-name', cheat.name);
-            
-            modalOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Закрытие модального окна
-        function closeModal() {
-            modalOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Показ уведомления
-        function showNotification() {
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        // Обработчик скачивания
-        function handleDownload() {
-            const cheatName = downloadBtn.getAttribute('data-cheat-name');
-            console.log(`Скачивание: ${cheatName}`);
-            
-            // Закрываем модальное окно
-            closeModal();
-            
-            // Показываем уведомление
-            showNotification();
-        }
-
-        // Обработчики событий
-        document.addEventListener('DOMContentLoaded', () => {
-            renderCheats();
-        });
-
-        // Закрытие модального окна
-        modalClose.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) {
-                closeModal();
-            }
-        });
-
-        // Закрытие модального окна по ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
-                closeModal();
-            }
-        });
-
-        // Обработчик кнопки скачивания
-        downloadBtn.addEventListener('click', handleDownload);
-
-        // Функция для добавления нового чита (для расширения)
-        function addCheat(cheatData) {
-            const newId = Math.max(...cheatsData.map(c => c.id)) + 1;
-            const newCheat = {
-                id: newId,
-                name: cheatData.name,
-                image: cheatData.image,
-                version: cheatData.version || "1.16.5",
-                icon: cheatData.icon || "🎮"
-            };
-            
-            cheatsData.push(newCheat);
-            renderCheats();
-            
-            return newCheat;
-        }
-
-        // Функция для удаления чита
-        function removeCheat(cheatId) {
-            const index = cheatsData.findIndex(c => c.id === cheatId);
-            if (index > -1) {
-                cheatsData.splice(index, 1);
-                renderCheats();
-                return true;
-            }
-            return false;
-        }
-
-        // Экспорт функций для возможного использования
-        window.CheatsCatalog = {
-            addCheat,
-            removeCheat,
-            cheatsData
-        };
-
-        // Добавляем эффект параллакса для фона
-        document.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            
-            document.body.style.background = `
-                radial-gradient(circle at ${mouseX * 100}% ${mouseY * 100}%, 
-                rgba(255, 0, 64, 0.05) 0%, 
-                transparent 50%),
-                linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)
-            `;
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
